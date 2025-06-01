@@ -90,6 +90,8 @@ RUN addgroup -g "${GID}" "${VDIRSYNCER_USER}" \
         #&& passwd -d root \
         # Set up Crontab file
         && touch "${CRON_FILE}"
+        # Set up log file
+        && touch "${LOG}"
 
 # Full sudo access for vdirsyncer user
 # RUN echo "vdirsyncer ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/vdirsyncer
@@ -129,7 +131,9 @@ RUN chmod -R +x /files/scripts \
         && chown -R "${UID}":"${GID}" /vdirsyncer \
         && chmod -R 755 /vdirsyncer \
         && chown "${UID}":"${GID}" "${CRON_FILE}" \
+        && chown "${UID}":"${GID}" "${LOG}" \
         && chmod 666 "${CRON_FILE}" \
+        && chmod 666 "${LOG}" \
         && chown -R "${VDIRSYNCER_USER}":"${VDIRSYNCER_USER}" "${PIPX_HOME}"
 
 # Switch User
